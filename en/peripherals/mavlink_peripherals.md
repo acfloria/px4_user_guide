@@ -24,7 +24,7 @@ The parameters for each instance are:
   - *Config*: Standard set of messages and rate configuration for a fast link (e.g. USB).
   - *Minimal*: Minimal set of messages for use with a GCS connected on a high latency link.
   - *ExtVision* or *ExtVisionMin*: Messages for offboard vision systems (ExtVision needed for VIO).
-  - *Iridium*: Messages for an [Iridium satellite communication system](../advanced_features/satcom_roadblock.md).
+  - *Iridium*: Messages for an [Iridium satellite communication system](../advanced_features/satcom_rockblock.md).
   
   > **Note** If you need to find the specific set of message for each mode search for `MAVLINK_MODE_` in [/src/modules/mavlink/mavlink_main.cpp](https://github.com/PX4/Firmware/blob/master/src/modules/mavlink/mavlink_main.cpp).
 

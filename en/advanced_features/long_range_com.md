@@ -5,12 +5,12 @@ The PX4 autopilot offers a pair of long range communication systems:
   * RockBlock Satellite Communication System (SatCom)
   * Wireless Broadband Communication System (WBCom)
 
-In contrast to the [Telemetry Radios](telemetry/README.md) the two communication systems can offer unlimited range. Possible use cases of those systems are remote operation centers and/or BVLOS (Beyond Visual Line Of Sight) flights. It is recommended to run the two systems in parallel to get redundancy but also because the two systems complement each other. The satellite communication system is more reliable at higher altitudes because the likelyhood of a satellite being blocked by terrain decreases. Due to the design of the antennas of the broadband communication the signal quality usually deteriorates at higher altitudes.
+In contrast to the [Telemetry Radios](../telemetry/README.md) the two communication systems can offer unlimited range. Possible use cases of those systems are remote operation centers and/or BVLOS (Beyond Visual Line Of Sight) flights. It is recommended to run the two systems in parallel to get redundancy but also because the two systems complement each other. The satellite communication system is more reliable at higher altitudes because the likelyhood of a satellite being blocked by terrain decreases. Due to the design of the antennas of the broadband communication the signal quality usually deteriorates at higher altitudes.
 
 The relay server and the ground station computer require the same setup steps and thus are treated in this chapter. For the vehicle and link specific setup, operating instructions, troubleshooting, and detailed link description please refer to the respective chapters:
 
-* [SatCom](advanced_features/satcom_rockblock.md)
-* [WBCom](advanced_features/wireless_broadband_com.md).
+* [SatCom](../advanced_features/satcom_rockblock.md)
+* [WBCom](../advanced_features/wireless_broadband_com.md)
 
 ## System Architecture / Required Components
 
@@ -23,9 +23,9 @@ An system overview using both links can be found in the following figure:
 
 The following components are needed for both communication links:
 
-* Pixhawk with the PX4 autopilot, ideally with a recent firmware version
+* A vehicle equipped with a Pixhawk using the PX4 autopilot, ideally with a recent firmware version
 * A message relay server with a fixed IP-address running Ubuntu Linux
-* A ground station computer running *QGroundControl* on Ubuntu Linux
+* A ground station computer running *QGroundControl* on Ubuntu Linux with a working stable connection to the relay server
 
 Components specific to the SatCom link:
 * A [RockBlock 9603](http://www.rock7mobile.com/products-rockblock-9603) module connected to the Pixhawk
@@ -39,10 +39,10 @@ Components specific to the WBCom link:
 
 The relay server and the ground station computer require the same setup steps and thus are treated in this chapter. For the vehicle and link specific setup please refer to the respective chapters:
 
-* [SatCom](advanced_features/satcom_rockblock.md)
-* [WBCom](advanced_features/wireless_broadband_com.md).
+* [SatCom](../advanced_features/satcom_rockblock.md)
+* [WBCom](../advanced_features/wireless_broadband_com.md).
 
-### Relay Server
+#### Relay Server
 
 The relay server should operate using Ubuntu and should have a static IP address and the following open ports:
 
@@ -53,6 +53,9 @@ The relay server should operate using Ubuntu and should have a static IP address
 * UDP for the WBCom:
     * `30000` for receiving messages (can be configured in `relay.cfg`)
 
+It is also possible to have a relay server with a dynamic IP address but that requires to set adjust the configuration on the plane and the ground station computer accordingly every flight.
+
+The relay server can be set up by executing the following steps:
 * Install the required python modules
 
     `pip install tornado==5.1.1 future paho-mqtt`
@@ -109,9 +112,9 @@ password = ROCK7_PASSWORD
 
 * To check if the script did start up correctly you can attach to the session (`screen -dr` or `tmux attach`). If you see `Connected with result code 0` then the script did boot up correctly and the relay server is operational.
 
-### Ground Station Computer
+#### Ground Station Computer
 
-It is assumed that the ground station computer operating system is Ubuntu.
+It is assumed that the ground station computer operating system is Ubuntu. It can be set up by executing the following steps:
 
 * Install the required python modules
 
@@ -131,7 +134,7 @@ It is assumed that the ground station computer operating system is Ubuntu.
     * `Target hosts: 127.0.0.1:10001`
     * `High Latency: Checked`
 
-* Add a UDP connection in QGC with the parameters for the LTE link:
+* Add a UDP connection in QGC with the parameters for the WBC link:
 
     * `Listening port: 20000`
     * `Target hosts: 127.0.0.1:20001`
